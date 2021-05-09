@@ -3,7 +3,16 @@
 @section('content')
     <div class="container">
         @include('layouts.common-navbar')
-
+        @php
+            if (isset($message)) {
+                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
+                echo '<span>追加しました。</span>';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                echo '<span aria-hidden="true">&times;</span>';
+                echo '</button>';
+                echo '</div>';
+            }
+        @endphp
         <table class="table">
             <thead>
                 <tr>
@@ -51,7 +60,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="memo-add-form">
+                        <form id="memo-add-form" action="{{ Request::fullUrl() }}" method="POST">
                             @csrf
                             <div class="form-group row">
                                 <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
@@ -60,7 +69,7 @@
                                         <option value="">カテゴリを選択</option>
                                         @php
                                             foreach ($categories as $category) {
-                                                echo "<option value=\"" . $category->id . '----' . $category->name . "\">" . $category->name . '</option>';
+                                                echo "<option value=\"" . $category->id  . "\">" . $category->name . '</option>';
                                             }
                                         @endphp
                                     </select>

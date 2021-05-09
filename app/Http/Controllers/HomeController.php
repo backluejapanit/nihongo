@@ -24,7 +24,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::query()
             ->where('user_id', '=', Auth::user()->id)
@@ -32,6 +32,7 @@ class HomeController extends Controller
 
         $memos = Memo::query()
             ->where('user_id', '=', Auth::user()->id)
+            ->where('category_id', '=', $request->category)
             ->with('category')
             ->paginate(10);
 
