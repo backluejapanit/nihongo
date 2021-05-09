@@ -22,8 +22,5 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-    // Add memo api
-    Route::post('/memos', [\App\Http\Controllers\MemoController::class, 'store'])->name('storeMemo');
+    Route::post('/home', [\App\Http\Controllers\MemoController::class, 'store'])->name('storeMemo');
 });
