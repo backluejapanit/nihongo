@@ -32,9 +32,14 @@ class HomeController extends Controller
 
         $memos = Memo::query()
             ->where('user_id', '=', Auth::user()->id)
-            ->where('category_id', '=', $request->category)
-            ->with('category')
-            ->paginate(10);
+            ->with('category');
+
+        if (isset($request->category))
+        {
+            $memos = $memos->where('category_id', '=', $request->category);
+        }
+
+        $memos = $memos->paginate(10);
 
         return view('home', compact('categories', 'memos'));
     }
