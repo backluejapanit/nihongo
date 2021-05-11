@@ -31,6 +31,7 @@ class HomeController extends Controller
             ->get();
 
         $memos = Memo::query()
+            ->orderBy('created_at', 'desc')
             ->where('user_id', '=', Auth::user()->id)
             ->with('category');
 
