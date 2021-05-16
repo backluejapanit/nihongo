@@ -4,7 +4,7 @@
     <div class="container">
         @include('layouts.common-navbar')
         @php
-            if (isset($message)) {
+            if (isset($message)&& $message=='add') {
                 echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
                 echo '<span>追加しました。</span>';
                 echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
@@ -12,6 +12,16 @@
                 echo '</button>';
                 echo '</div>';
             }
+
+            if (isset($message) && $message=='del') {
+                echo '<div id="success-alert" class="alert alert-danger alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
+                echo '<span>削除しました。</span>';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                echo '<span aria-hidden="true">&times;</span>';
+                echo '</button>';
+                echo '</div>';
+            }
+            
         @endphp
         <table class="table">
             <thead>
@@ -32,7 +42,9 @@
                         echo "<td scope=\"row\">" . $memo->name . "</td>\n";
                         echo '<td>' . $memo->category->name . "</td>\n";
                         echo '<td>' . $memo->description . "</td>\n";
-                        echo "<td></td>\n";
+                        echo '<td><a href="/memos/edit/id=' .$memo->id .'" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#edit-memo-modal">整理</a>';
+                        echo '<a href="'.  route('deleteMemo',['id' => $memo->id]) .' " class="btn btn-outline-danger" >解消</a></td>';
                         echo "</tr>\n";
                     }
                 @endphp
@@ -48,7 +60,7 @@
             </tfoot>
         </table>
 
-        <!-- Modal -->
+        <!-- Modal 1-->
         <div class="modal fade" id="add-memo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -60,8 +72,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="memo-add-form" action="{{ Request::fullUrl() }}" method="POST">
+                        <form id="memo-add-form" action="{{ route('storeMemo') }}" method="POST">
                             @csrf
+
                             <div class="form-group row">
                                 <label for="category-id" class="col-md-4 col-form-label">{{ __('カテゴリ') }}</label>
                                 <div class="col-md-12">
@@ -100,5 +113,5 @@
                 </div>
             </div>
         </div>
-    </div>
+
 @endsection

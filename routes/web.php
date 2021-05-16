@@ -22,5 +22,7 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::post('/home', [\App\Http\Controllers\MemoController::class, 'store'])->name('storeMemo');
+    Route::post('/memos', [\App\Http\Controllers\MemoController::class, 'store'])->name('storeMemo');
+    Route::post('/home/edit/', [\App\Http\Controllers\MemoController::class, 'edit'])->name('editMemo');
+    Route::get('/memos/delete/{id}', [\App\Http\Controllers\MemoController::class, 'delete'])->name('deleteMemo');
 });
