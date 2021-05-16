@@ -11,6 +11,7 @@ class Memo extends Model
 
     protected $fillable = [
         'category_id',
+        'id',
         'user_id',
         'name',
         'description',

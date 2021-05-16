@@ -21,24 +21,24 @@ class MemoController extends Controller
 
         Memo::query()->create($payload);
 
-        $categories = Category::query()
-            ->where('user_id', '=', Auth::user()->id)
-            ->get();
+        return \Redirect::route('home', [
+            'category' => $request->category,
+            'page' => $request->page,
+            'message' => 'add'
 
-        $memos = Memo::query()
-            ->orderBy('created_at', 'desc')
-            ->where('user_id', '=', Auth::user()->id)
-            ->with('category');
+        ]);
+    }
+    public function delete(Request $request, $id)
+    {
+        $del_Memo = Memo::find($id);
 
-        if (isset($request->category))
-        {
-            $memos = $memos->where('category_id', '=', $request->category);
-        }
+        $del_Memo->delete();
 
-        $memos = $memos->paginate(10);
+        return \Redirect::route('home', [
+            'category' => $request->category,
+            'page' => $request->page,
+            'message' => 'del'
 
-        $message = '追加しました。';
-
-        return view('home', compact('categories', 'memos', 'message'));
+        ]);
     }
 }
