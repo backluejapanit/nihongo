@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Memo;
+use App\Http\Controllers\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class MemoController extends Controller
 {
@@ -25,7 +27,6 @@ class MemoController extends Controller
             'category' => $request->category,
             'page' => $request->page,
             'message' => 'add'
-
         ]);
     }
     public function delete(Request $request, $id)
@@ -38,7 +39,30 @@ class MemoController extends Controller
             'category' => $request->category,
             'page' => $request->page,
             'message' => 'del'
+        ]);
+    }
 
+    public function edit ($id)
+    {
+        $edit_memo = Memo::find($id);
+
+        $categories = Category::query()
+        ->where('user_id', '=', Auth::user()->id)
+        ->get();
+
+        return view('edit', compact('edit_memo','categories'));
+    }
+    public function update(Request $request, $id)
+    {
+        $update = Memo::find($id);
+        $update->name = $request->name;
+        $update->category_id = $request->category_id;
+        $update->description = $request->description;
+        $update->save();
+        return \Redirect::route('home', [
+            'category' => $request->category,
+            'page' => $request->page,
+            'message' => 'update'
         ]);
     }
 }
