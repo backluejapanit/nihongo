@@ -21,6 +21,14 @@
                 echo '</button>';
                 echo '</div>';
             }
+            if (isset($message) && $message=='update') {
+                echo '<div id="success-alert" class="alert alert-success alert-dismissible fade show" style="position: fixed; top: 100px; right: 0;" role="alert">';
+                echo '<span>整理しました。</span>';
+                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                echo '<span aria-hidden="true">&times;</span>';
+                echo '</button>';
+                echo '</div>';
+            }
             
         @endphp
         <table class="table">
@@ -42,8 +50,7 @@
                         echo "<td scope=\"row\">" . $memo->name . "</td>\n";
                         echo '<td>' . $memo->category->name . "</td>\n";
                         echo '<td>' . $memo->description . "</td>\n";
-                        echo '<td><a href="/memos/edit/id=' .$memo->id .'" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#edit-memo-modal">整理</a>';
+                        echo '<td><a href="' . route('editMemo',['id' => $memo->id]) .'" class="btn btn-outline-primary" >整理</a>';
                         echo '<a href="'.  route('deleteMemo',['id' => $memo->id]) .' " class="btn btn-outline-danger" >解消</a></td>';
                         echo "</tr>\n";
                     }

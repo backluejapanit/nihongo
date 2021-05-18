@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Memo extends Model
 {
     use HasFactory;
-
+    protected $table ="memos";
     protected $fillable = [
         'category_id',
         'id',
