@@ -7,14 +7,14 @@
         <input type="text" name="name" value="{{ $edit_memo->name }}">
     </p>
     <p>
-    <select name="category_id" id="category-id" class="form-control" required>
-    <option value="">カテゴリを選択</option>
-    @php
-    foreach ($categories as $category) {
-        echo "<option value=\"" . $category->id  . "\">" . $category->name . '</option>';
-    }
-    @endphp
-    </select>
+        <select name="category_id" id="category-id" class="form-control" required>
+            <option value="">カテゴリを選択</option>
+            @php
+            foreach ($categories as $category) {
+            echo "<option value=\"" . $category->id . "\">" . $category->name . "</option>";
+            }
+            @endphp
+        </select>
     </p>
     <p>
         <label for="description">Description</label><br>
